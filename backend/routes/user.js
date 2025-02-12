@@ -1,0 +1,70 @@
+const express=require("express");
+const { string } = require("zod");
+import zod from "zod";
+import { User } from "../db";
+import bcrypt from "bcrypt"
+const router=express.Router();
+
+const signupschema=zod.object({
+    username:zod.string().min(3,"Username must be atleast 30 characters long"),
+    firstname:zod.string().max(50,"Firstname must not exceed 50 characters"),
+    lastname:zod.string().max(50,"Lastname must not exceed 50 characters"),
+    password:zod.string().min(8, "Password must be at least 8 characters long")
+    .regex(/[A-Z]/, "Password must contain at least one uppercase letter")
+    .regex(/[a-z]/, "Password must contain at least one lowercase letter")
+    .regex(/[0-9]/, "Password must contain at least one number")
+})
+router.post("/signup",async (req,res)=>
+{
+    const valid=signupschema.safeParse(req.body);
+    if(!valid.success())
+    {
+        return res.status(400).json(valid.error.format());
+
+    }
+    const {firstname,lastname,username,password}=valid.data;
+    const existinguser=await User.findOne({username});
+    if(existinguser)
+        return res.status(400).json({error:"username already exists"});
+    
+    const hashedPassword = await bcrypt.hash(password, 10);
+    await User.create({
+        username:username,
+        password:hashedPassword,
+        firstname:firstname,
+        lastname:lastname,
+    })
+
+    const userid=User._id;
+    const token=jwt.sign({
+        userid
+    },JWT_SECRET);
+
+    res.json({
+        message:"User created successfully",
+        token:token
+    })
+})
+
+router.post("/signin",async (req,res) => {
+    const {username,password}=req.body;
+    const isfound=await User.findOne({username});
+    if(!isfound){
+        return res.status(400).json({msg:"User not found"});
+
+    }
+    const match=await bcrypt.compare(password,isfound.password);
+    if(!match){
+        return res.status(400).json({msg:"Incorrect password"});
+
+    }
+    const token = jwt.sign({
+        userId : dbUser._id
+       }, JWT_SECRET);
+    
+       res.json({
+        message : "Logged in",
+        token : token
+       });
+})
+module.exports=router;
