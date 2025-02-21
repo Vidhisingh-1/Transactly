@@ -3,6 +3,7 @@ const { string } = require("zod");
 import zod from "zod";
 import { User } from "../db";
 import bcrypt from "bcrypt"
+import { authmiddleware } from "./middleware";
 const router=express.Router();
 
 const signupschema=zod.object({
@@ -59,12 +60,61 @@ router.post("/signin",async (req,res) => {
 
     }
     const token = jwt.sign({
-        userId : dbUser._id
+        userId : isfound._id
        }, JWT_SECRET);
     
        res.json({
-        message : "Logged in",
+        message : "Successfully signed in",
         token : token
        });
+})
+const updateBody=zod.object({
+    password:zod.string().optional,
+    firstname:zod.string().optional(),
+    lastname:zod.string().optional(),
+})
+router.put("/",authmiddleware,async(req,res)=>{
+    const {success}=updateBody.safeParse(req.body);
+    if(!success){
+        res.status(411).json({
+
+            message:"Error encountered while updating the information"
+            
+            })
+    }
+    await User.updateOne(req.body,{
+        id:req.userId
+    })
+    res.json({
+        message:"Updated successfully"
+    })
+})
+
+router.get("/bulk",async(req,res)=>{
+    const filter=req.query.filter || "";
+
+    const users=await User.find({
+        $or:[{
+            firstname:{
+                "$regex":filter,
+                "$options": "i" 
+            }
+        },{
+            lastname:{
+                $regex:filter,
+                "$options": "i"
+            }
+        }]
+    })
+
+    res.json({
+        user:users.map(user=>({
+           username:user.username,
+           firstname:user.firstname,
+           lastname:user.lastname,
+           _id:user._id
+        }))
+    })
+
 })
 module.exports=router;
