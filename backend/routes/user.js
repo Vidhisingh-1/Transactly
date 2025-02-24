@@ -1,7 +1,7 @@
 const express=require("express");
 const { string } = require("zod");
 import zod from "zod";
-import { User } from "../db";
+import { Account, User } from "../db";
 import bcrypt from "bcrypt"
 import { authmiddleware } from "./middleware";
 const router=express.Router();
@@ -35,8 +35,12 @@ router.post("/signup",async (req,res)=>
         firstname:firstname,
         lastname:lastname,
     })
-
     const userid=User._id;
+    await Account.create({
+        userid,
+        balance:1+Math.random()*10000
+    })
+    
     const token=jwt.sign({
         userid
     },JWT_SECRET);
