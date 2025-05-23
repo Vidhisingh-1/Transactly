@@ -1,54 +1,60 @@
-const mongoose =require("mongoose");
-const zod=require("zod");
-require('dotenv').config();
-const dburl=process.env.mongodburl;
-mongoose.connect(dburl);
+require('dotenv').config();  
 
+const mongoose = require('mongoose');
+const MONGODB_URL = process.env.MONGODB_URL;
 
-const userschema=new mongoose.Schema({
-    username:{
-        type:String,
-        required:true,
-        unique:true,
-        minlength:3,
-        maxlength:30,
-        lowercase:true
-    },
-    firstname:{
-        type:String,
-        required:true,
-        maxlength:50,
-        trim:true
-    },
-    lastname:{
-        type:String,
-        required:true,
-        maxlength:50,
-        trim:true
-    },
-    
-    password:{
-        type:String,
-        required:true,
-        minlength:6
-    },
-    
-})
-const bankschema=new mongoose.Schema({
-    userid:{
-        type:mongoose.Schema.Types.ObjectId,
-        ref:'User',
-        required:true
-    },
-    balance:{
-        type:Number,
-        required:true,
-
+async function connection ()
+{
+    try 
+    {
+        await mongoose.connect(MONGODB_URL);
+        console.log("Connected to MongoDB");
     }
-});
-const Account=mongoose.model('Account',bankschema);
-const User=mongoose.model("User",userschema);
-module.exports={
+    catch (e)
+    {
+        console.error(e);
+    }
+}
+
+connection();
+
+const userSchema = new mongoose.Schema({
+    userName : {
+        type : String,
+        required : true,
+        unique : true
+    },
+    password : {
+        type : String,
+        required : true
+    },
+    firstName : {
+        type : String,
+        required : true
+    },
+    lastName : {
+        type : String,
+        required : true
+    }
+})
+
+const User = mongoose.model('User', userSchema);
+
+const accountSchema = new mongoose.Schema({
+    userId : {
+        type : mongoose.Schema.Types.ObjectId,
+        ref : 'User',
+        required : true
+    },
+    balance : {
+        type : Number,
+        required : true
+    }
+})
+
+const Account = mongoose.model('Account', accountSchema);
+
+module.exports = {
     User,
-    Account,
-}; 
+    Account
+}

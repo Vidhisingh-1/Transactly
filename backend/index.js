@@ -1,11 +1,16 @@
-const express=require("express");
-const router = require("./routes/index");
+const express = require('express');
+const cors = require('cors');
+const {mainRouter} = require('./routes/mainRouter');
+require('dotenv').config();  
 
-const app=express();
 
+const app = express();
 app.use(cors());
+app.use(express.json());
 
-app.use("/api/vi",router);
+app.use('/api/v1', mainRouter);
 
-  app.listen(3000);
-
+const port = process.env.PORT;
+app.listen(port, () => {
+    console.log(`listening on ${port}`);
+});
