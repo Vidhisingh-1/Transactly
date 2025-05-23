@@ -39,7 +39,7 @@ export function Signup()
 
                     setLoading(true);
 
-                    const response = await axios.post('https://dummy-paytm.onrender.com/api/v1/user/signup', {
+                    const response = await axios.post('https://transactly-6nnd.onrender.com/api/v1/user/signup', {
                         userName,
                         firstName,
                         lastName,

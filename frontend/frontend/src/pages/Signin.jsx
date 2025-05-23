@@ -40,7 +40,7 @@ export function Signin ()
                 onClick={async () => {
                     setLoading(true);
 
-                    const response = await axios.post('https://dummy-paytm.onrender.com/api/v1/user/signin', {
+                    const response = await axios.post('https://transactly-6nnd.onrender.com/api/v1/user/signin', {
                         userName,
                         password
                     })

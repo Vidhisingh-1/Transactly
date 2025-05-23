@@ -36,7 +36,7 @@ export function SendMoney ()
 
                         setLoading(true);
 
-                        const response = await axios.post('https://dummy-paytm.onrender.com/api/v1/account/transfer', {
+                        const response = await axios.post('https://transactly-6nnd.onrender.com/api/v1/account/transfer', {
                             body : {
                                         to: id,
                                         amount : parseInt(amount)

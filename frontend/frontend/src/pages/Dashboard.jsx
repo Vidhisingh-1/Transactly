@@ -11,7 +11,7 @@ export function Dashboard ()
 
     async function handler ()
     {
-        const response = await axios.get('https://dummy-paytm.onrender.com/api/v1/account/balance',{
+        const response = await axios.get('https://transactly-6nnd.onrender.com/api/v1/account/balance',{
             headers : {authorization : localStorage.getItem("token")}
         });
         
