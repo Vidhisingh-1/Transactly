@@ -2,7 +2,7 @@
 export function LoadComponent ({label})
 {
     return (
-        <div className="text-red-500 text-xs font-semibold">
+        <div className="load-label">
             {label}
         </div>
     )

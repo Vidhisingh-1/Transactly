@@ -6,11 +6,11 @@ export function Appbar ({firstName})
     const [isHovered, setIsHovered] = useState(false);
 
     return (
-        <div className = "font-semibold flex justify-between items-center h-[50px] border border-b-2 border-amber-400" >
-            <div className = "pl-4" >
+        <div className = "appbar" >
+            <div className = "appbar-left" >
                 Payment App
             </div>
-            <div className = "flex pr-4 w-[150px] justify-around" >
+            <div className = "appbar-right" >
                 <div>
                     {isHovered ? <Logout/> : <Hello/>}
                 </div>
@@ -20,7 +20,7 @@ export function Appbar ({firstName})
                     setTimeout(() => {
                         setIsHovered(false);
                     }, 1000);
-                }} className = "cursor-pointer w-[30px] border border-blue-700 rounded-full flex justify-center hover:bg-blue-500 hover:text-white duration-100 group" >
+                }} className = "initial-circle" >
                     {firstName.length > 0 ? firstName[0].toUpperCase() : <></> }
                 </div>
             </div>
@@ -31,7 +31,7 @@ export function Appbar ({firstName})
 function Hello ()
 {
     return (
-        <div className="opacity-0 md:opacity-100 bg-amber-300 w-[80px] rounded-md flex justify-center items-center">
+        <div className="hello-box">
             Hello
         </div>
     )
@@ -45,7 +45,7 @@ function Logout ()
         <div onClick={() => {
             localStorage.removeItem("token");
             window.location.href = "https://dummy-paytm.vercel.app/";
-        }} className="cursor-pointer bg-red-500 text-white border rounded-md w-[80px] flex justify-center items-center">
+        }} className="logout-box">
             Logout
         </div>
     )

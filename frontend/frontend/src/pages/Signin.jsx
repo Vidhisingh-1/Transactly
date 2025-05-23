@@ -16,18 +16,28 @@ export function Signin ()
     const navigate = useNavigate();
 
     return (
-        <div className = 'bg-gray-50 h-screen flex justify-center items-center' >
-            <div className = 'bg-white flex h-[400px] flex-col items-center justify-center w-[400px] border shadow-sm shadow-gray-500 rounded-2xl'>
+        <div className = "signin-wrapper" >
+            <div className = "signin-card">
                 <Heading label = {"Sign In"} />
-                <InputBox type={"text"} onChange={(e) => {
+                <InputBox type={"text"} 
+                onChange={(e) => {
                     setUserName(e.target.value);
-                }} label = {""} placeholder = {"Enter username/email"} />
-                <InputBox type={"password"} onChange={(e) => {
+                }} 
+                label = {""} 
+                placeholder = {"Enter username/email"} 
+                />
+                <InputBox 
+                type={"password"} 
+                onChange={(e) => {
                     setPassword(e.target.value);
-                }} label = {""} placeholder = {"Enter password"} />
+                }} 
+                label = {""} 
+                placeholder = {"Enter password"} 
+                />
                 {loading ? <LoadComponent label={"Signing you in..."} /> : <></>}
-                <div className='text-red-600 font-semibold text-xs'>{message}</div>
-                <Button onClick={async () => {
+                <div className='signin-message'>{message}</div>
+                <Button 
+                onClick={async () => {
                     setLoading(true);
 
                     const response = await axios.post('https://dummy-paytm.onrender.com/api/v1/user/signin', {

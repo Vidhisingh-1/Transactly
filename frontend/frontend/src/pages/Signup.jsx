@@ -9,22 +9,31 @@ export function Signup()
     const navigate = useNavigate();
 
     return(
-        <div className = 'h-screen flex justify-center items-center' >
-            <div className = 'bg-white flex h-[450px] flex-col items-center justify-center w-[400px] border shadow-sm shadow-gray-500 rounded-2xl'>
+        <div className = "signup-wrapper" >
+            <div className = "signup-card">
                 <Heading label = {"Sign up"} />
+
                 <InputBox onChange = {(e) => {
                     setUserName(e.target.value);
-                }} type={"email"} label = {""} placeholder = {"Enter username or email-id"} />
+                }} type={"email"} label = {""} placeholder = {"Enter username or email-id"} 
+                />
+
                 <InputBox onChange = {(e) => {
                     setFirstName(e.target.value);
-                }} type={"text"} label = {""} placeholder = {"Enter Firstname"} />
+                }} type={"text"} label = {""} placeholder = {"Enter Firstname"} 
+                />
+
                 <InputBox onChange = {(e) => {
                     setLastName(e.target.value);
-                }} type={"text"} label = {""} placeholder = {"Enter Lastname"} />
+                }} type={"text"} label = {""} placeholder = {"Enter Lastname"} 
+                />
+
                 <InputBox onChange = {(e) => {
                     setPassword(e.target.value);
-                }} type={"password"} label = {""} placeholder = {"Enter password"} />
-                <div className='text-red-600 font-semibold text-xs'>{message}</div>
+                }} type={"password"} label = {""} placeholder = {"Enter password"} 
+                />
+
+                <div className="signup-message">{message}</div>
                 {loading ? <LoadComponent label={"Creating your account..."} /> : <></>}
                 <Button onClick={async () => {
 

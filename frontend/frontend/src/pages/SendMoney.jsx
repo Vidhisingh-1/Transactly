@@ -19,19 +19,19 @@ export function SendMoney ()
     const navigate = useNavigate();
 
     return (
-        <div className = 'h-screen flex justify-center items-center'>
-            <div className = 'bg-white h-[400px] flex flex-col justify-center items-center border shadow-sm shadow-gray-500 rounded-2xl' >
+        <div className = "sendmoney-wrapper">
+            <div className = "sendmoney-card" >
                 <Heading label = {"Send Money"} />
-                <div className = 'w-[400px] flex justify-center p-2' >
+                <div className = "sendmoney-user" >
                     <FriendLogo label = {firstName[0].toUpperCase()} />
                     <SubHeading label = {`${firstName} ${lastName}`} />
                 </div>
                 <InputBox type={"number"} onChange={(e) => {
                     setAmount(e.target.value);
                 }} label = {""} placeholder = {"Amount(in Rs.)"} />
-                <div className='text-red-600 font-semibold text-xs'>{message}</div>
+                <div className="sendmoney-message">{message}</div>
                 {loading ? <LoadComponent label={"Sending..."} /> : <></>}
-                <div className='h-[100px] flex flex-col justify-center items-center'>
+                <div className="sendmoney-actions">
                     <button onClick={async () => {
 
                         setLoading(true);
@@ -54,12 +54,12 @@ export function SendMoney ()
                         }
 
                         setMessage(response.data.message);
-                    }} className = "focus:outline-blue-900 bg-blue-500 text-white font-semibold text-sm border rounded-md px-7 my-2 hover:bg-blue-600 duration-150 w-[200px] h-[40px]" >
+                    }} className = "btn-transfer" >
                         {"Initiate Transfer"}
                     </button>
                     <button onClick = {() => {
                         navigate(-1);
-                    }} className='focus:outline-red-700 text-white bg-red-500 font-semibold text-sm border rounded-md w-[200px] h-[40px] flex justify-center items-center hover:bg-red-600 duration-150'>Cancel</button>
+                    }} className="btn-cancel">Cancel</button>
                 </div>
             </div>
         </div>
