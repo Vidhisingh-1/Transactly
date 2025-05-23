@@ -6,8 +6,6 @@ import axios from "axios"
 
 export function Dashboard ()
 {
-    
-
     const [balance, setBalance] = useState(0);
     const [firstName, setFirstName] = useState("");
 

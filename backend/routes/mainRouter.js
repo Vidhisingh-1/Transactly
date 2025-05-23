@@ -1,7 +1,7 @@
 const express = require('express');
 const zod = require('zod');
 const {userRouter} = require('./userRouter');
-const {accountRouter} = require('./accounRouter');
+const {accountRouter} = require('./accountRouter');
 const {authMiddleware} = require('../middleware');
 
 const mainRouter = express.Router();
