@@ -3,7 +3,7 @@ import {Button} from '../components/Button'
 import {Heading} from '../components/Heading'
 import {InputBox} from '../components/InputBox'
 import {BottomWarning} from '../components/BottomWarning'
-import {LoadComponent } from '../components/Loadcomponent'
+import {LoadComponent } from '../components/LoadComponent'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 export function Signup()
