@@ -1,7 +1,7 @@
 import {Button} from '../components/Button'
 import {Heading} from '../components/Heading'
 import {InputBox} from '../components/InputBox'
-import {BottomWarning} from '../components/Bottomwarning'
+import {BottomWarning} from '../components/BottomWarning'
 import {LoadComponent} from '../components/Loadcomponent'
 import { useState } from 'react'
 import axios from 'axios'
