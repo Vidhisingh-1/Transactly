@@ -22,11 +22,13 @@ accountRouter.get("/balance",authMiddleware,async(req,res)=>{
 //good solution -to use transactions in mongodb
 const transferSchemaAmount = zod.coerce.number().min(1);
 
+
 accountRouter.post('/transfer', authMiddleware, async (req, res) => {
     const session = await mongoose.startSession();
     
     session.startTransaction(); 
     const { amount, to } = req.body;
+    console.log(amount);
 
     const isValidNumber = transferSchemaAmount.safeParse(amount);
 
