@@ -7,7 +7,7 @@ const allowedOrigins = [
   "https://transactly-orpin.vercel.app", 
   "https://transactly-6nnd.onrender.com"        
 ];
-
+const app = express();
 app.use(cors({
   origin: function (origin, callback) {
     if (!origin) return callback(null, true);
@@ -20,7 +20,7 @@ app.use(cors({
   credentials: true,
 }));
 
-const app = express();
+
 app.use(express.json());
 
 app.use('/api/v1', mainRouter);
