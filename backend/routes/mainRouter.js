@@ -3,6 +3,7 @@ const zod = require('zod');
 const {userRouter} = require('./userRouter');
 const {accountRouter} = require('./accountRouter');
 const {authMiddleware} = require('../middleware');
+const { User } = require('../db');
 
 const mainRouter = express.Router();
 

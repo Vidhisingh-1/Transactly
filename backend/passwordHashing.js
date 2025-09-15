@@ -9,7 +9,8 @@ async function hashPassword (password)
     }
     catch (e)
     {
-        console.error(e);
+        console.error("Error hashing password",e);
+        throw e;
     }
 }
 

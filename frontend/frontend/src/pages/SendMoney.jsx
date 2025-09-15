@@ -29,6 +29,7 @@ export function SendMoney ()
                 <InputBox type={"number"} onChange={(e) => {
                     setAmount(e.target.value);
                 }} label = {""} placeholder = {"Amount(in Rs.)"} />
+                
                 <div className="sendmoney-message">{message}</div>
                 {loading ? <LoadComponent label={"Sending..."} /> : <></>}
                 <div className="sendmoney-actions">

@@ -6,8 +6,6 @@ const mongoose =require("mongoose");
 
 const accountRouter=express.Router();
 
-
-
 accountRouter.get("/balance",authMiddleware,async(req,res)=>{
     const account=await Account.findOne({
         userId:req.userId
@@ -22,18 +20,17 @@ accountRouter.get("/balance",authMiddleware,async(req,res)=>{
     });
 });
 //good solution -to use transactions in mongodb
-const transferSchemaAmount = zod.number().min(1);
+const transferSchemaAmount = zod.coerce.number().min(1);
 
 accountRouter.post('/transfer', authMiddleware, async (req, res) => {
     const session = await mongoose.startSession();
     
     session.startTransaction(); 
-    const { amount, to } = req.body.body;
-    
-    
+    const { amount, to } = req.body;
+
     const isValidNumber = transferSchemaAmount.safeParse(amount);
 
-    if (!isValidNumber.success)
+    if (!(isValidNumber.success))
     {
         await session.abortTransaction();
         
@@ -41,10 +38,10 @@ accountRouter.post('/transfer', authMiddleware, async (req, res) => {
             message: "Amount must be a number"
         });
     }
-
+const amt=isValidNumber.data;
     const account = await Account.findOne({ userId: req.userId }).session(session);
 
-    if (!account || account.balance < amount) {
+    if (!account || account.balance < amt) {
         await session.abortTransaction();
         
         return res.json({
@@ -62,8 +59,8 @@ accountRouter.post('/transfer', authMiddleware, async (req, res) => {
         });
     }
 
-    await Account.updateOne({ userId: req.userId }, { $inc: { balance: -amount } }).session(session);
-    await Account.updateOne({ userId: to }, { $inc: { balance: amount } }).session(session);
+    await Account.updateOne({ userId: req.userId }, { $inc: { balance: -amt } }).session(session);
+    await Account.updateOne({ userId: to }, { $inc: { balance: amt } }).session(session);
 
     await session.commitTransaction();
     res.json({
